@@ -1,0 +1,29 @@
+[
+    {
+        "task_index": 10,
+        "request_time": 131,
+        "wait_time": 169,
+        "task_type": 5,
+        "request_pos": 25,
+        "target_pos": 22,
+        "service_time": 20
+    },
+    {
+        "task_index": 21,
+        "request_time": 298,
+        "wait_time": 2,
+        "task_type": 4,
+        "request_pos": 23,
+        "target_pos": 1,
+        "service_time": 20
+    },
+    {
+        "task_index": 22,
+        "request_time": 319,
+        "wait_time": 0,
+        "task_type": 2,
+        "request_pos": 11,
+        "target_pos": 18,
+        "service_time": 30
+    }
+]

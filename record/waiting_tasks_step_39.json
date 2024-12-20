@@ -1,0 +1,65 @@
+[
+    {
+        "task_index": 84,
+        "request_time": 1042,
+        "wait_time": 98,
+        "task_type": 5,
+        "request_pos": 24,
+        "target_pos": 17,
+        "service_time": 20
+    },
+    {
+        "task_index": 85,
+        "request_time": 1068,
+        "wait_time": 72,
+        "task_type": 2,
+        "request_pos": 22,
+        "target_pos": 18,
+        "service_time": 30
+    },
+    {
+        "task_index": 86,
+        "request_time": 1083,
+        "wait_time": 57,
+        "task_type": 5,
+        "request_pos": 19,
+        "target_pos": 19,
+        "service_time": 20
+    },
+    {
+        "task_index": 89,
+        "request_time": 1112,
+        "wait_time": 28,
+        "task_type": 1,
+        "request_pos": 18,
+        "target_pos": 25,
+        "service_time": 20
+    },
+    {
+        "task_index": 90,
+        "request_time": 1118,
+        "wait_time": 22,
+        "task_type": 2,
+        "request_pos": 2,
+        "target_pos": 18,
+        "service_time": 30
+    },
+    {
+        "task_index": 91,
+        "request_time": 1146,
+        "wait_time": 0,
+        "task_type": 1,
+        "request_pos": 5,
+        "target_pos": 24,
+        "service_time": 20
+    },
+    {
+        "task_index": 92,
+        "request_time": 1161,
+        "wait_time": 0,
+        "task_type": 1,
+        "request_pos": 20,
+        "target_pos": 25,
+        "service_time": 20
+    }
+]

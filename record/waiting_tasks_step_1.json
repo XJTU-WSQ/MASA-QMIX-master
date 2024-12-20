@@ -1,0 +1,11 @@
+[
+    {
+        "task_index": 1,
+        "request_time": 24,
+        "wait_time": 0,
+        "task_type": 1,
+        "request_pos": 9,
+        "target_pos": 24,
+        "service_time": 20
+    }
+]

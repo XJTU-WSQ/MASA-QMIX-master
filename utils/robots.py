@@ -44,25 +44,6 @@ def cal_pos(start_pos, target_pos, speed, time_span):
     return tuple(renew_pos)  # 将结果转换为元组返回
 
 
-def get_enable_flag(task_id, robot_id):
-    if task_id == 0 and robot_id == 3:
-        return 1
-    elif task_id == 1 and robot_id == 1:
-        return 1
-    elif task_id == 2 and robot_id == 2:
-        return 1
-    elif task_id == 3 and robot_id == 3:
-        return 1
-    elif task_id == 4 and robot_id == 1:
-        return 1
-    elif task_id == 5 and robot_id == 4:
-        return 1
-    elif task_id == 6 and robot_id == 0:
-        return 1
-    else:
-        return 0
-
-
 class Robots:
 
     def __init__(self):
@@ -101,8 +82,6 @@ class Robots:
         # 获取每个机器人所掌握的技能集
         for i in range(self.num_robots):
             self.robots_skills[i] = self.get_skills(i)
-        self.robots_type_available_num = [self.n_walking, self.n_wheelchair, self.n_delivery,
-                                          self.n_company, self.n_private_delivery]
 
     # 机器人能力：① 康复训练能力 ② 辅助老人移动能力(快速) ③ 物品派送能力 ④ 陪伴能力 ⑤ 物品的抓取能力 ⑥ 辅助老人移动能力
     def get_skills(self, agent_id):

@@ -1,0 +1,38 @@
+[
+    {
+        "task_index": 124,
+        "request_time": 1635,
+        "wait_time": 165,
+        "task_type": 4,
+        "request_pos": 24,
+        "target_pos": 0,
+        "service_time": 20
+    },
+    {
+        "task_index": 127,
+        "request_time": 1659,
+        "wait_time": 141,
+        "task_type": 1,
+        "request_pos": 9,
+        "target_pos": 24,
+        "service_time": 20
+    },
+    {
+        "task_index": 134,
+        "request_time": 1749,
+        "wait_time": 51,
+        "task_type": 4,
+        "request_pos": 24,
+        "target_pos": 10,
+        "service_time": 20
+    },
+    {
+        "task_index": 136,
+        "request_time": 1779,
+        "wait_time": 21,
+        "task_type": 1,
+        "request_pos": 1,
+        "target_pos": 24,
+        "service_time": 20
+    }
+]

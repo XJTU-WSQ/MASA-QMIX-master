@@ -1,3 +1,4 @@
+import json
 import numpy as np
 import os
 from common.rollout import RolloutWorker
@@ -5,8 +6,6 @@ from agent.agent import Agents
 from common.replay_buffer import ReplayBuffer
 import sys
 from test_task import load_tasks_from_file
-from RD_rules import random_agent_wrapper
-from SD_rules import sd_rules_agent_wrapper
 
 
 class Runner:
@@ -16,76 +15,62 @@ class Runner:
         self.rolloutWorker = RolloutWorker(env, self.agents, args)
         self.buffer = ReplayBuffer(args)
         self.args = args
-
-        self.epoch_idx = []
         self.rewards = []
-        self.epoch_time_on_roads = []
-        self.epoch_time_wait = []
         self.evaluate_index = 0
         self.episode_index = 0
-
         self.save_path = self.args.result_dir + '/' + args.alg
         if not os.path.exists(self.save_path):
             os.makedirs(self.save_path)
         self.evaluate_tasks = load_tasks_from_file('task/fixed_tasks.pkl')
         # evaluate 的返回值
         self.qmix_reward = [[] for i in range(len(self.evaluate_tasks))]
-        self.qmix_time_wait = [[] for i in range(len(self.evaluate_tasks))]
-        self.sd_reward = [[] for i in range(len(self.evaluate_tasks))]
-        self.sd_time_wait = [[] for i in range(len(self.evaluate_tasks))]
-        self.rd_reward = [[] for i in range(len(self.evaluate_tasks))]
-        self.rd_time_wait = [[] for i in range(len(self.evaluate_tasks))]
-        self.sd_episode_reward = [0 for i in range(len(self.evaluate_tasks))]
-        self.sd_episode_time_wait = [0 for i in range(len(self.evaluate_tasks))]
-        for tasks_idx, task in enumerate(self.evaluate_tasks):
-            self.sd_episode_reward[tasks_idx], sd_episode_time_on_road, self.sd_episode_time_wait[tasks_idx], _ = sd_rules_agent_wrapper(task)
 
     def run(self):
         train_steps = 0
+        metrics = {
+            "epoch_rewards": [],
+            "completed_tasks": [],
+            "conflict_rates": [],
+            "resolved_conflict_rates": [],
+            "avg_wait_times": []
+        }
+
         for epoch in range(self.args.n_epoch):
             # 显示输出
             if epoch % self.args.evaluate_cycle == 0 and epoch != 0:
                 self.evaluate()
             episodes = []
-            r_s = []
-            t1_s = []
-            t2_s = []
             # 收集self.args.n_episodes个episodes
+            epoch_metrics = {"rewards": [], "completed_tasks": 0, "conflicts": 0, "resolved_conflicts": 0, "avg_wait_time": 0}
 
             for episode_idx in range(self.args.n_episodes):
-                episode, episode_reward, episode_time_on_road, episode_time_wait, terminated = self.rolloutWorker.generate_episode()
-                text = 'train episode:  {}, rewards:  {:.2f}, time_on_road:  {:.2f}, time_wait:  {:.2f}, done: {:}\n'
+                episode, episode_reward, terminated, episode_data, episode_metrics = self.rolloutWorker.generate_episode()
+                filename = f"logs/episode_{epoch}_{episode_idx}.json"
+                with open(filename, 'w') as f:
+                    json.dump(episode_data, f, indent=4)
+                text = 'train episode:  {}, rewards:  {:.2f},  done: {:}\n'
                 sys.stdout.write(
-                    text.format(self.episode_index, episode_reward, episode_time_on_road, episode_time_wait,
-                                terminated))
+                    text.format(self.episode_index, episode_reward, terminated))
                 self.episode_index += 1
                 episodes.append(episode)
-                r_s.append(episode_reward)
-                t1_s.append(episode_time_on_road)
-                t2_s.append(episode_time_wait)
+                epoch_metrics["rewards"].append(episode_reward)
+                epoch_metrics["completed_tasks"] += episode_metrics["completed_tasks"]
+                epoch_metrics["conflicts"] += episode_metrics["conflicted_tasks"]
+                epoch_metrics["resolved_conflicts"] += episode_metrics["resolved_conflicts"]
+                epoch_metrics["avg_wait_time"] += episode_metrics["average_wait_time"]
 
-            epoch_average_reward = sum(r_s) / len(r_s)
-            epoch_average_time_wait = sum(t2_s) / len(t2_s)
-            self.epoch_idx.append(epoch)
-            if len(self.rewards) == 0:
-                reward = epoch_average_reward
-            else:
-                reward = 0.1*epoch_average_reward + 0.9*sum(self.rewards) / len(self.rewards)
+            # 记录每个 epoch 的统计量
+            metrics["epoch_rewards"].append(sum(epoch_metrics["rewards"]) / len(epoch_metrics["rewards"]))
+            metrics["completed_tasks"].append(epoch_metrics["completed_tasks"] / self.args.n_episodes)
+            metrics["conflict_rates"].append(epoch_metrics["conflicts"] / self.args.n_episodes)
+            metrics["resolved_conflict_rates"].append(epoch_metrics["resolved_conflicts"] / self.args.n_episodes)
+            metrics["avg_wait_times"].append(epoch_metrics["avg_wait_time"] / self.args.n_episodes)
 
-            if len(self.epoch_time_wait) == 0:
-                average_time_wait = epoch_average_time_wait
-            else:
-                average_time_wait = 0.1*epoch_average_time_wait + 0.9*sum(self.epoch_time_wait) / len(self.epoch_time_wait)
-            print("train_epoch:", epoch, "average_reward:", reward, "average_time_wait:", average_time_wait)
-            self.rewards.append(reward)
-            self.epoch_time_on_roads.append(sum(t1_s) / self.args.n_episodes)
-            self.epoch_time_wait.append(average_time_wait)
-
-            if epoch % 100 == 0:
-                data_r = list(zip(self.epoch_idx, self.rewards))
-                data_t2 = list(zip(self.epoch_idx, self.epoch_time_wait))
-                np.savetxt('data/rewards_data.csv', data_r, delimiter=',')
-                np.savetxt('data/time_wait.csv', data_t2, delimiter=',')
+            print(f"Epoch {epoch}: Avg Reward={metrics['epoch_rewards'][-1]:.2f}, "
+                  f"Task Completion={metrics['completed_tasks'][-1]:.2f}, "
+                  f"Conflict Rate={metrics['conflict_rates'][-1]:.2f}, "
+                  f"Resolved Conflict Rate={metrics['resolved_conflict_rates'][-1]:.2f}, "
+                  f"Avg Wait Time={metrics['avg_wait_times'][-1]:.2f}")
 
             # episode的每一项都是一个(1, episode_len, n_agents, 具体维度)四维数组，下面要把所有episode的obs拼在一起
             episode_batch = episodes[0]
@@ -99,53 +84,47 @@ class Runner:
                 self.agents.train(mini_batch, train_steps)
                 train_steps += 1
 
+        with open("train_metrics.json", "w") as f:
+            json.dump(metrics, f)
+
     def evaluate(self):
+        eval_metrics = {
+            "evaluation_rewards": [],
+            "completed_tasks": 0,
+            "conflicts": 0,
+            "resolved_conflicts": 0,
+            "avg_wait_time": 0
+        }
+
         for tasks_idx, task in enumerate(self.evaluate_tasks):
-            # print('tasks_idx:', tasks_idx, 'task:', task)
-            qmix_episode_reward, qmix_episode_time_on_road, qmix_episode_time_wait, _ = self.rolloutWorker.evaluate_episode(task)
-            self.qmix_reward[tasks_idx].append(qmix_episode_reward)
-            self.qmix_time_wait[tasks_idx].append(qmix_episode_time_wait)
-            # sd 奖励函数这里需要修改
-            self.sd_reward[tasks_idx].append(0)
-            self.sd_time_wait[tasks_idx].append(self.sd_episode_time_wait[tasks_idx])
-            rd_episode_reward, rd_episode_time_on_road, rd_episode_time_wait, _ = random_agent_wrapper(task)
-            self.rd_reward[tasks_idx].append(rd_episode_reward)
-            self.rd_time_wait[tasks_idx].append(rd_episode_time_wait)
+            qmix_episode_reward, terminated, episode_metrics = self.rolloutWorker.evaluate_episode(task)
+            eval_metrics["evaluation_rewards"].append(qmix_episode_reward)
+            eval_metrics["completed_tasks"] += episode_metrics["completed_tasks"]
+            eval_metrics["conflicts"] += episode_metrics["conflicted_tasks"]
+            eval_metrics["resolved_conflicts"] += episode_metrics["resolved_conflicts"]
+            eval_metrics["avg_wait_time"] += episode_metrics["average_wait_time"]
 
-        # 保存数据
-        save_data('qmix', self.qmix_reward, self.qmix_time_wait)
-        save_data('sd', self.sd_reward, self.sd_time_wait)
-        save_data('rd', self.rd_reward, self.rd_time_wait)
+        # 计算平均值
+        num_evaluate_tasks = len(self.evaluate_tasks)
+        eval_metrics["avg_reward"] = sum(eval_metrics["evaluation_rewards"]) / num_evaluate_tasks
+        eval_metrics["avg_completed_tasks"] = eval_metrics["completed_tasks"] / num_evaluate_tasks
+        eval_metrics["avg_conflict_rate"] = eval_metrics["conflicts"] / num_evaluate_tasks
+        eval_metrics["avg_resolved_conflict_rate"] = eval_metrics["resolved_conflicts"] / num_evaluate_tasks
+        eval_metrics["avg_wait_time"] = eval_metrics["avg_wait_time"] / num_evaluate_tasks
 
-        print("-------------------------------------")
-        text = 'qmix_evaluate_index:  {}, qmix_ave_rewards:  {:.2f}, qmix_ave_time_wait:  {:.2f}\n'
-        sys.stdout.write(text.format(self.evaluate_index,
-                                     sum(row[self.evaluate_index] for row in self.qmix_reward) / len(self.qmix_reward),
-                                     sum(row[self.evaluate_index] for row in self.qmix_time_wait) / len(
-                                         self.qmix_time_wait)))
-        print("-------------------------------------")
-        text_1 = 'sd_evaluate_index:  {}, sd_ave_rewards:  {:.2f}, sd_ave_time_wait:  {:.2f}\n'
-        sys.stdout.write(text_1.format(self.evaluate_index,
-                                       sum(row[self.evaluate_index] for row in self.sd_reward) / len(self.sd_reward),
-                                       sum(row[self.evaluate_index] for row in self.sd_time_wait) / len(
-                                         self.sd_time_wait)))
-        print("-------------------------------------")
-        text_2 = 'rd_evaluate_index:  {}, rd_ave_rewards:  {:.2f}, rd_ave_time_wait:  {:.2f}\n'
-        sys.stdout.write(text_2.format(self.evaluate_index,
-                                       sum(row[self.evaluate_index] for row in self.rd_reward) / len(self.rd_reward),
-                                       sum(row[self.evaluate_index] for row in self.rd_time_wait) / len(
-                                         self.rd_time_wait)))
+        # 打印评估结果
+        print(f"Evaluation Results: "
+              f"Avg Reward={eval_metrics['avg_reward']:.2f}, "
+              f"Task Completion Rate={eval_metrics['avg_completed_tasks']:.2f}, "
+              f"Conflict Rate={eval_metrics['avg_conflict_rate']:.2f}, "
+              f"Resolved Conflict Rate={eval_metrics['avg_resolved_conflict_rate']:.2f}, "
+              f"Avg Wait Time={eval_metrics['avg_wait_time']:.2f}")
 
-        self.evaluate_index += 1
-        print("-------------------------------------")
+        # 保存评估统计量
+        with open("eval_metrics.json", "w") as f:
+            json.dump(eval_metrics, f)
 
 
-def save_data(prefix, reward, time_wait):
-    data_r = list(reward)
-    data_t2 = list(time_wait)
-
-    np.savetxt(f'data/{prefix}_episode_rewards.csv', data_r, delimiter=',')
-    np.savetxt(f'data/{prefix}_episode_time_wait.csv', data_t2, delimiter=',')
 
 
 

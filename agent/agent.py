@@ -22,25 +22,24 @@ class Agents:
         self.args = args
         print('Init Agents')
 
-    def choose_action(self, obs, last_action, agent_num, avail_actions, epsilon):
+    def choose_action(self, obs, agent_num, avail_actions, epsilon):
+        """
+        根据 Q 值和动态权重选择动作。
+        """
         inputs = obs.copy()
-        #  avail_actions_ind = np.nonzero(avail_actions)[0]  # index of actions which can be choose 存在不同
-        # transform agent_num to one-hot vector
         agent_id = np.zeros(self.n_agents)
         agent_id[agent_num] = 1.
-        # 需要思考上一个动作，是否会对当前时刻的任务分配产生影响？
-        if self.args.last_action:
-            inputs = np.hstack((inputs, last_action))
-        if self.args.reuse_network:
-            inputs = np.hstack((inputs, agent_id))
         hidden_state = self.policy.eval_hidden[:, agent_num, :]
-        # transform the shape of inputs from (42,) to (1,42)
-        inputs = torch.tensor(inputs, dtype=torch.float32).unsqueeze(0)  # [[]]  -> []
+
+        # 转换输入维度
+        inputs = torch.tensor(inputs, dtype=torch.float32).unsqueeze(0)
         avail_actions = torch.tensor(avail_actions, dtype=torch.float32).unsqueeze(0)
+
         if self.args.cuda:
             inputs = inputs.cuda()
             hidden_state = hidden_state.cuda()
-        # get q value
+
+        # 计算 Q 值
         q_value, self.policy.eval_hidden[:, agent_num, :] = self.policy.eval_rnn(inputs, hidden_state)
         # choose action from q value
         q_value[avail_actions == 0.0] = -float("inf")

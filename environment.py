@@ -1,24 +1,11 @@
 from abc import ABC
-from utils.sites import Sites
-from utils.robots import Robots, get_enable_flag
-from utils.tasks import Tasks
 import gym
 from gym.utils import seeding
+from utils.sites import Sites
+from utils.robots import Robots
+from utils.tasks import Tasks
 from utils.util import *
-import task_generator_fixed
-
-
-def is_all_zero(matrix):
-    for row in matrix:
-        for element in row:
-            if element != 0:
-                return False
-    return True
-
-
-def reward_function(wait_time, time_on_road):
-    reward = -(wait_time + time_on_road)*0.01
-    return reward
+import task_generator
 
 
 class ScheduleEnv(gym.Env, ABC):
@@ -28,54 +15,49 @@ class ScheduleEnv(gym.Env, ABC):
         self.sites = Sites()
         self.robots = Robots()
         self.tasks = Tasks()
-        # 任务相关参数
-        # self.time_total_wait = 0
-        self.tasks_array = task_generator_fixed.generate_tasks()
-        self.time_wait = [0 for _ in range(len(self.tasks_array))]
-        self.total_time_wait = 0
-        self.time_on_road = [0 for _ in range(self.robots.num_robots)]
-        self.total_time_on_road = 0
-        self.tasks_completed = [0 for _ in range(len(self.tasks_array))]
-        self.tasks_allocated = [0 for _ in range(len(self.tasks_array))]
-        self.task_window = np.array([[0 for _ in range(6)] for _ in range(7)])
-        # 环境相关参数
-        self.time = 0.
-        self.done = False
-        self.step_count = 0
-        self.state4marl = [0 for _ in range(17)]
-        self.step_reward = []
-        self.baseline = 0
         # 机器人状态信息 : 1占用，0空闲
         self.robots_state = [0 for _ in range(self.robots.num_robots)]
-        self.robots.robots_type_available_num = [self.robots.n_walking, self.robots.n_wheelchair,
-                                                 self.robots.n_delivery, self.robots.n_company,
-                                                 self.robots.n_private_delivery]
-        self.obs4marl = [[0 for _ in range(14)] for _ in range(self.robots.num_robots)]
+        # 任务相关参数
+        self.tasks_array = task_generator.generate_tasks()
+        self.task_window_size = 12
+        self.locked_tasks = [0] * self.task_window_size  # 记录任务锁定状态
+        self.time_wait = [0 for _ in range(len(self.tasks_array))]
+        self.total_time_wait = 0
+        self.tasks_completed = [0 for _ in range(len(self.tasks_array))]
+        self.tasks_allocated = [0 for _ in range(len(self.tasks_array))]
+        self.unallocated_tasks = set(range(len(self.tasks_array)))  # 未分配任务集合
+        self.task_window = np.array([[0 for _ in range(6)] for _ in range(self.task_window_size)])
+        # 环境相关参数
+        self.cached_obs4marl = None
+        self.time = 0.
+        self.done = False
+        self.state4marl = [0 for _ in range(len(self.get_state()))]
+        # 动态获取 obs_shape
+        temp_avail_action = [0] * (self.task_window_size + 1)
+        temp_obs = self.get_agent_obs(0, temp_avail_action)
+        self.obs_shape = len(temp_obs)  # 动态观测维度
+        # 初始化 obs4marl
+        self.obs4marl = [[0 for _ in range(self.obs_shape)] for _ in range(self.robots.num_robots)]
         self.robot_task_assignments = [[] for _ in range(self.robots.num_robots)]
 
     def reset(self):
         # 任务信息初始化
+        self.task_window_size = 12
         self.time_wait = [0 for _ in range(len(self.tasks_array))]
         self.total_time_wait = 0
-        self.time_on_road = [0 for _ in range(self.robots.num_robots)]
-        self.total_time_on_road = 0
         self.tasks_completed = [0 for _ in range(len(self.tasks_array))]
         self.tasks_allocated = [0 for _ in range(len(self.tasks_array))]
-        self.task_window = [[0 for _ in range(6)] for _ in range(7)]
+        self.unallocated_tasks = set(range(len(self.tasks_array)))  # 未分配任务集合
+        self.task_window = [[0 for _ in range(6)] for _ in range(self.task_window_size)]
         # 环境参数初始化
         self.time = 0.
         self.done = False
-        self.step_count = 0
-        self.state4marl = [0 for _ in range(17)]
-        self.step_reward = []
-        self.baseline = 0
+        self.state4marl = [0 for _ in range(len(self.get_state()))]
         # 机器人信息初始化
         self.robots.robot_pos = self.robots.robot_sites_pos
         self.robots_state = [0 for _ in range(self.robots.num_robots)]
-        self.robots.robots_type_available_num = [self.robots.n_walking, self.robots.n_wheelchair,
-                                                 self.robots.n_delivery, self.robots.n_company,
-                                                 self.robots.n_private_delivery]
-        self.obs4marl = [[0 for _ in range(14)] for _ in range(self.robots.num_robots)]
+        # 重新初始化 obs4marl
+        self.obs4marl = [[0 for _ in range(self.obs_shape)] for _ in range(self.robots.num_robots)]
         self.robot_task_assignments = [[] for _ in range(self.robots.num_robots)]
 
     def seed(self, seed=None):
@@ -83,225 +65,228 @@ class ScheduleEnv(gym.Env, ABC):
         return [seed]
 
     def renew_wait_time(self):
-        # index = 0
-        for task_index in range(len(self.tasks_array)):
-            if self.tasks_array[task_index][1] <= self.time and self.tasks_allocated[task_index] == 0:
+        """
+        优化后的 renew_wait_time：只遍历未分配任务集合。
+        """
+        tasks_to_remove = []
+        for task_index in self.unallocated_tasks:
+            if self.tasks_array[task_index][1] <= self.time:
                 self.time_wait[task_index] = self.time - self.tasks_array[task_index][1]
-            if self.tasks_array[task_index][1] > self.time:
-                break
-        # print('time_wait: ', self.time_wait)
+            else:
+                break  # 任务数组有序，可以提前退出
+            if self.tasks_allocated[task_index] == 1:
+                tasks_to_remove.append(task_index)
+
+        # 从未分配任务集合中移除已分配任务
+        for task_index in tasks_to_remove:
+            self.unallocated_tasks.remove(task_index)
 
     def get_state(self):
-        self.state4marl[0:17] = self.robots_state
-        # self.state4marl[17] = self.waiting_task_num
-        return self.state4marl
+        """
+        获取全局状态，包含机器人和任务的全局信息。
+        """
+        state = []
+        max_pos_value = 110.0  # 假设坐标范围为 [0, 10]
+        total_wait_time = max(self.total_time_wait, 1e-5)  # 避免分母为零
 
-    def renew_task_window(self, agent_id):
+        # 添加机器人状态信息（归一化机器人位置）
+        for robot_id in range(self.robots.num_robots):
+            state.append(self.robots_state[robot_id])
+            state.extend([p / max_pos_value for p in self.robots.robot_pos[robot_id]])
+
+        # 添加任务信息
+        waiting_tasks = [
+            task for task_index, task in enumerate(self.tasks_array)
+            if self.tasks_allocated[task_index] == 0 and task[1] <= self.time
+        ]
+        state.append(len(waiting_tasks) / self.task_window_size)  # 归一化任务数量
+
+        for i in range(min(self.task_window_size, len(waiting_tasks))):
+            task = waiting_tasks[i]
+            task_index = task[0]
+            state.append(task[4] / max_pos_value)  # 目标位置归一化
+            state.append(self.time_wait[task_index] / total_wait_time)  # 动态归一化等待时间
+
+        # 填充空位
+        for _ in range(self.task_window_size - len(waiting_tasks)):
+            state.extend([0, 0])
+
+        return np.array(state, dtype=np.float32)
+
+    def update_task_window(self):
+        """
+        更新任务窗：只在每个 step 开始时生成一次任务窗。
+        """
         m = 0
-        self.task_window = [[0 for _ in range(6)] for _ in range(7)]
-        robot_type = self.robots.robots_type_id[agent_id]
+        self.task_window = [[0 for _ in range(6)] for _ in range(self.task_window_size)]
         for task_index in range(len(self.tasks_array)):
-            if self.tasks_array[task_index][1] <= self.time and self.tasks_allocated[task_index] == 0 and \
-                    get_enable_flag(self.tasks_array[task_index][3], robot_type):
+            if self.tasks_array[task_index][1] <= self.time and self.tasks_allocated[task_index] == 0:
                 self.task_window[m] = self.tasks_array[task_index].tolist()
                 m += 1
-                if m == 7:
+                if m == self.task_window_size:
                     break
             if self.tasks_array[task_index][1] > self.time:
                 break
-        # print('task_window: ', self.task_window)
 
-    # 函数功能：机器人的技能集，与任务窗任务的技能集比较，得到可以选择的动作。
     def get_avail_actions(self, agent_id):
-        avail_actions = [0, 0, 0, 0, 0, 0, 0, 1]
-        if self.robots_state[agent_id] == 1 or is_all_zero(self.task_window):
-            return [0, 0, 0, 0, 0, 0, 0, 1]
-        # 任务集和机器人技能集做匹配
-        tasks_skill_list = self.tasks.get_tasks_required_skill_list(self.task_window)
+        """
+        获取当前机器人可执行的任务，并对无效任务动态掩码，返回动作掩码和惩罚权重。
+        """
+        avail_actions = [0] * (self.task_window_size + 1)  # 初始化动作掩码，+1 表示 "不执行任务"
+        avail_actions[-1] = 1  # 默认 "不执行任务" 动作可选
+
+        # 如果机器人忙碌，直接返回
+        if self.robots_state[agent_id] == 1:
+            return avail_actions
+
+        # 机器人技能
         robot_skill = self.robots.get_skills(agent_id)
-        for j, task_skill_list in enumerate(tasks_skill_list):
-            flag = 0
-            for i in range(len(robot_skill)):
-                if task_skill_list[i] == 1 and robot_skill[i] == 1:
-                    flag = 1
-                elif task_skill_list[i] == 1 and robot_skill[i] == 0:
-                    flag = 0
-                    break
-            if flag == 1:
-                avail_actions[j] = 1
-                avail_actions[7] = 0
+
+        # 遍历任务窗，检查任务是否有效
+        for j, task in enumerate(self.task_window):
+            if task == [0, 0, 0, 0, 0, 0]:  # 判断任务是否为占位符
+                continue
+
+            task_skill_list = self.tasks.required_skills[task[3]]  # 获取任务需求技能
+
+            # 判断技能是否匹配
+            if all(rs >= ts for rs, ts in zip(robot_skill, task_skill_list)):
+                avail_actions[j] = 1  # 设置任务为可选
+            else:
+                avail_actions[j] = 0  # 机器人技能不匹配，任务不可选
         return avail_actions
 
+    def update_observations(self):
+        """
+        统一生成所有智能体的观测信息，缓存到 self.cached_obs4marl。
+        """
+        for agent_id in range(self.robots.num_robots):
+            avail_action = self.get_avail_actions(agent_id)
+            observation = self.get_agent_obs(agent_id, avail_action)
+            self.obs4marl[agent_id] = observation
+
     def get_agent_obs(self, robot_id, avail_action):
-        # 获取机器人的任务类型，以及对应类型机器人的移动速度
-        if self.robots_state[robot_id] == 1:
-            self.obs4marl[robot_id] = [0 for _ in range(14)]
-            # print('robot_id: ', robot_id, 'obs: ', self.obs4marl[robot_id])
-            return self.obs4marl[robot_id]
+        """
+        获取当前机器人局部观测信息，基于当前任务窗特征和机器人与任务的关系。
+        """
+        observation = []
         robot_type = self.robots.robots_type_id[robot_id]
         speed = self.robots.speed[robot_type]
+        robot_pos = self.robots.robot_pos[robot_id]
+
+        # 1. 添加机器人自身信息（归一化机器人位置）
+        max_pos_value = 110.0  # 假设坐标范围在 [0, 10]
+        observation.extend([p / max_pos_value for p in robot_pos])  # 机器人位置归一化
+        observation.append(float(self.robots_state[robot_id]))  # 是否空闲
+        total_wait_time = max(self.total_time_wait, 1e-5)
+
+        # 2. 添加任务信息
         for i, task in enumerate(self.task_window):
-            # all(element == 0 for element in task)
-            if avail_action[i] == 0:
-                self.obs4marl[robot_id][2*i: 2*i + 2] = [0, 0]
+            if all(x == 0 for x in task) or avail_action[i] == 0:  # 无效任务
+                observation.extend([0.0, 0.0])  # 无效任务占位
             else:
-                [task_index, _, request_id, task_type, destination_id, service_time] = task
-                if task_type == 2 or task_type == 5:
-                    first_place = destination_id
-                else:
-                    first_place = request_id
-                dis = distance(self.robots.robot_pos[robot_id], self.sites.sites_pos[first_place], speed)
-                time_wait = self.time_wait[task_index]
-                self.obs4marl[robot_id][2*i: 2*i + 2] = [dis, time_wait]
-        # print('robot_id: ', robot_id, 'obs: ', self.obs4marl[robot_id])
-        return self.obs4marl[robot_id]
+                task_index = task[0]
+                target_pos = self.sites.sites_pos[task[4]]
+                dis = distance(robot_pos, target_pos, speed)  # 机器人到任务的执行成本
 
-    # def get_agent_obs(self, robot_id, avail_action):
-    #     # 获取机器人的任务类型，以及对应类型机器人的移动速度
-    #     if self.robots_state[robot_id] == 1:
-    #         self.obs4marl[robot_id] = [0 for _ in range(7)]
-    #         # print('robot_id: ', robot_id, 'obs: ', self.obs4marl[robot_id])
-    #         return self.obs4marl[robot_id]
-    #     robot_type = self.robots.robots_type_id[robot_id]
-    #     speed = self.robots.speed[robot_type]
-    #     for i, task in enumerate(self.task_window):
-    #         # all(element == 0 for element in task)
-    #         if avail_action[i] == 0:
-    #             self.obs4marl[robot_id][i] = 0
-    #         else:
-    #             [task_index, _, request_id, task_type, destination_id, service_time] = task
-    #             if task_type == 2 or task_type == 5:
-    #                 first_place = destination_id
-    #             else:
-    #                 first_place = request_id
-    #             arrive_time = distance(self.robots.robot_pos[robot_id], self.sites.sites_pos[first_place], speed)
-    #             time_wait = self.time_wait[task_index]
-    #             self.obs4marl[robot_id][i] = arrive_time + time_wait
-    #     # print('robot_id: ', robot_id, 'obs: ', self.obs4marl[robot_id])
-    #     return self.obs4marl[robot_id]
+                # 归一化特征
+                normalized_dis = dis / max_pos_value  # 最大距离为 110
+                normalized_wait_time = self.time_wait[task_index] / total_wait_time
 
-    def has_chosen_action(self, action_id, robot_id):
-        task = self.task_window[action_id]
-        [task_index, requests_time, site_id, task_id, destination_id, service_time] = task
-        time_on_road, total_time = self.robots.execute_task(robot_id, task)
-        self.time_on_road[robot_id] = time_on_road
-        # 更新机器人的占用状态，更新对应类型可使用机器人个数
-        self.robots_state[robot_id] = 1
-        robot_type = self.robots.robots_type_id[robot_id]
-        self.robots.robots_type_available_num[robot_type] -= 1
-        # 更新任务分配情况
-        self.tasks_allocated[task_index] = 1
-        wait_time = self.time_wait[task_index]
-        reward = reward_function(wait_time, time_on_road)
-        self.step_reward.append(reward)
-        assignment_info = {
-            'task_index': task_index,
-            'requests_time': requests_time,
-            'allocate_time': self.time,
-            'wait_time': self.time_wait[task_index],
-            'site_id': site_id,
-            'task_id': task_id,
-            'destination_id': destination_id,
-            'service_time': service_time,
-            'time_on_road': time_on_road,
-            'total_time': total_time,
-            'reward': reward
-        }
-        self.robot_task_assignments[robot_id].append(assignment_info)
+                observation.extend([
+                    normalized_dis,  # 当前机器人到任务的执行成本
+                    normalized_wait_time,  # 任务累计等待时间
+                ])
+        return observation
+
+    def get_all_agent_obs(self):
+        """
+        返回当前 step 内所有智能体的观测信息。
+        """
+        return self.obs4marl
 
     def step(self, actions):
+        """
+        执行所有智能体的动作，更新环境状态，并计算奖励。
+        """
+        time_span = 30  # 每个 step 的时间间隔
+        max_wait_time = max(self.time_wait + [1e-5])  # 避免分母为零
+        conflict_tasks = {}  # 冲突任务记录
+        allocated_task_rewards = 0  # 当前 step 分配的任务奖励
+        total_conflict_penalty = 0  # 冲突惩罚
+        total_wait_penalty = 0  # 等待时间惩罚
+        conflict_penalty = 0
+        # 用于记录任务是否被重复选择
+        task_chosen = {}
 
-        self.step_count += 1
-        time_span = 60
-
-        # print('step_count: ', self.step_count)
-        # print("robot_state", self.robots_state)
-        # print('time: ', self.time)
-        # print('actions: ', actions)
+        # 更新忙碌机器人的状态
         for robot_id in range(self.robots.num_robots):
-            # 如果机器人正忙，更新机器人坐标
             if self.robots_state[robot_id] == 1:
-                [task_index, requests_time, site_id, task_id, destination_id] = self.robots.robots_tasks_info[robot_id]
-                finish = self.robots.renew_position(robot_id, task_id, site_id, destination_id, time_span)
+                task_info = self.robots.robots_tasks_info[robot_id]
+                finish = self.robots.renew_position(robot_id, task_info[3], task_info[2], task_info[4], time_span)
                 if finish:
-                    # 更新机器人状态
                     self.robots_state[robot_id] = 0
-                    robot_type = self.robots.robots_type_id[robot_id]
-                    self.robots.robots_type_available_num[robot_type] += 1
-                    self.tasks_completed[task_index] = 1
+                    self.tasks_completed[task_info[0]] = 1
 
-        # 更新时间
+        # 遍历所有智能体，执行动作并更新任务分配状态
+        for robot_id, action in enumerate(actions):
+            if action < self.task_window_size:  # 有效动作
+                task = self.task_window[action]
+                task_index = task[0]
+
+                if task_index in task_chosen:
+                    task_chosen[task_index] += 1
+                    total_conflict_penalty += 1
+                else:
+                    task_chosen[task_index] = 1
+
+                if self.tasks_allocated[task_index] == 0:
+                    time_on_road, total_time = self.robots.execute_task(robot_id, task)
+                    self.robots_state[robot_id] = 1
+                    self.tasks_allocated[task_index] = 1
+                    self.total_time_wait += self.time_wait[task_index] + time_on_road
+                    task_wait_time = self.time_wait[task_index]
+                    normalized_allocated_reward = task_wait_time / max_wait_time
+                    allocated_task_rewards += normalized_allocated_reward
+
+        # 未分配任务的等待时间惩罚（归一化）
+        unallocated_tasks = [
+            task for task_index, task in enumerate(self.tasks_array)
+            if self.tasks_allocated[task_index] == 0 and task[1] <= self.time
+        ]
+        for task in unallocated_tasks:
+            task_wait_time = self.time_wait[task[0]]
+            normalized_waiting_penalty = task_wait_time / max_wait_time
+            total_wait_penalty += normalized_waiting_penalty
+
+        # 冲突惩罚归一化
+        for task_index, conflict_count in task_chosen.items():
+            if conflict_count > 1:  # 存在冲突
+                normalized_conflict_penalty = (conflict_count - 1) / self.robots.num_robots
+                total_conflict_penalty += normalized_conflict_penalty
+
+        # 计算总奖励
+        reward = (
+                allocated_task_rewards * 10  # 分配任务的奖励
+                - total_wait_penalty * 0.1  # 等待时间惩罚
+                - total_conflict_penalty * 5  # 冲突惩罚
+        )
+
         self.time += time_span
-        self.total_time_on_road += sum(self.time_on_road)
-        self.total_time_wait = sum(self.time_wait) + self.total_time_on_road
-        if self.time > self.tasks_array[-1][1] and sum(self.tasks_allocated) == len(self.tasks_allocated):
+        self.total_time_wait = sum(self.time_wait)
+        if self.time > self.tasks_array[-1][1] and sum(self.tasks_completed) == len(self.tasks_completed):
             self.done = True
-
-        reward = 0
-        if self.done:
-            reward = (self.baseline - self.total_time_wait)*0.5
-            # print(self.baseline)
-        else:
-            reward = sum(self.step_reward)
-            # self.save_task_assignments_to_file()
-        # print("reward:", reward)
-
-        self.time_on_road = [0 for i in range(self.robots.num_robots)]
-        self.step_reward = []
         return reward, self.done
 
-    def get_time(self):
-        return self.total_time_on_road, self.total_time_wait
-
     def get_env_info(self):
+        """
+        动态获取环境信息，包括 n_actions, n_agents, state_shape, obs_shape 和 episode_limit。
+        """
         return {
-            "n_actions": 8,
-            "n_agents": self.robots.num_robots,
-            "state_shape": len(self.get_state()),
-            "obs_shape": 14,
-            "episode_limit": 140
+            "n_actions": self.task_window_size + 1,  # 动作数量 = 任务窗大小 + 1
+            "n_agents": self.robots.num_robots,  # 机器人数量
+            "state_shape": len(self.get_state()),  # 全局状态向量的长度
+            "obs_shape": self.obs_shape,  # 动态观测维度
+            "episode_limit": 180
         }
-
-    def choose_sd_action(self, avail_action, robot_id):
-        indices = np.where(np.array(avail_action[0:7]) == 1)[0]
-        if indices.size == 0:
-            return 7
-        robot_type = self.robots.robots_type_id[robot_id]
-        speed = self.robots.speed[robot_type]
-        dis = [0. for i in range(len(indices))]
-        for i, avail_act in enumerate(indices):
-            task = self.task_window[avail_act]
-            [_, _, request_id, task_type, destination_id, _] = task
-            if task_type == 2 or task_type == 5:
-                first_place = destination_id
-            else:
-                first_place = request_id
-            dis[i] = distance(self.robots.robot_pos[robot_id], self.sites.sites_pos[first_place], speed)
-        min_index = np.argmin(dis)
-        # print("robot: ", robot_id, "avail_action: ", avail_action, "distance:", dis, "sd_choose_action: ", indices[min_index])
-        return indices[min_index]
-
-    def set_sd_episode_time_wait(self, sd_episode_time_wait):
-        self.baseline = sd_episode_time_wait
-
-    def save_task_assignments_to_file(self):
-        with open('record/robot_task_assignments.txt', 'w') as f:
-            for robot_id, assignments in enumerate(self.robot_task_assignments):
-                f.write(f"Robot {robot_id} Task Assignments:\n")
-                for assignment in assignments:
-                    try:
-                        f.write(f"\tTask Index: {assignment['task_index']:>4}  "
-                                f"Requests Time: {assignment['requests_time']:>6}  "
-                                f"Allocate Time: {assignment['allocate_time']:>7.1f}  "
-                                f"Wait Time: {assignment['wait_time']:>6.1f}  "
-                                f"Site ID: {assignment['site_id']:>3}  "
-                                f"Task ID: {assignment['task_id']:>3}  "
-                                f"Destination ID: {assignment['destination_id']:>4}  "
-                                f"Service Time: {assignment['service_time']:>6}  "
-                                f"Time on Road: {assignment['time_on_road']:>7.2f}  "
-                                f"Total Time: {assignment['total_time']:>7.2f}  "
-                                f"Reward: {assignment['reward']:>7.4f}\n")
-                    except KeyError as e:
-                        print(f"Error accessing key in assignment: {e}")
-
 

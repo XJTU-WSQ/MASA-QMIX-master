@@ -1,34 +1,28 @@
-from task_generator_fixed import generate_tasks
+from task_generator import generate_tasks
 import pickle
 
 
 def generate_fixed_tasks():
     all_tasks = []
-
     # 生成4个不同的任务列表
     for _ in range(4):
-        tasks = generate_tasks()  # 假设 generate_tasks() 用于生成任务列表
+        tasks = generate_tasks()
         all_tasks.append(tasks)
-
     # 存储任务列表到文件
     with open('fixed_tasks.pkl', 'wb') as f:
         pickle.dump(all_tasks, f)
-
     return all_tasks
 
 
 def generate_test_tasks():
     all_tasks = []
-
-    # 生成六个不同的任务列表
+    # 生成100个不同的任务列表进行算法性能测试
     for _ in range(100):
-        tasks = generate_tasks()  # 假设 generate_tasks() 用于生成任务列表
+        tasks = generate_tasks()
         all_tasks.append(tasks)
-
     # 存储六个任务列表到文件
     with open('test_tasks.pkl', 'wb') as f:
         pickle.dump(all_tasks, f)
-
     return all_tasks
 
 

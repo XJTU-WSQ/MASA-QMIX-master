@@ -22,6 +22,24 @@ TASK_PROBABILITIES = {
 }
 
 
+def choose_sd_action(self, avail_action, robot_id):
+    indices = np.where(np.array(avail_action[0:7]) == 1)[0]
+    if indices.size == 0:
+        return 7
+    robot_type = self.robots.robots_type_id[robot_id]
+    speed = self.robots.speed[robot_type]
+    dis = [0. for i in range(len(indices))]
+    for i, avail_act in enumerate(indices):
+        task = self.task_window[avail_act]
+        [_, _, request_id, task_type, destination_id, _] = task
+        if task_type == 2 or task_type == 5:
+            first_place = destination_id
+        else:
+            first_place = request_id
+        dis[i] = distance(self.robots.robot_pos[robot_id], self.sites.sites_pos[first_place], speed)
+    min_index = np.argmin(dis)
+    return indices[min_index]
+
 def sd_rules_agent_wrapper(tasks_array):
 
     env = ScheduleEnv()
@@ -50,7 +68,7 @@ def sd_rules_agent_wrapper(tasks_array):
             if action != 7:
                 env.has_chosen_action(action, agent_id)
             actions.append(action)
-        reward, terminated = env.step(actions)
+        next_state, _, reward, next_observation, terminated = env.step(actions)
         episode_reward += reward
     episode_time_on_road, episode_time_wait = env.get_time()
 
@@ -66,6 +84,7 @@ if __name__ == "__main__":
     #     print('task_id:', i, 'episode_time_on_road: ', time_on_road, 'episode_time_wait:', time_wait, "done:", done)
     #     episode_time_wait_list.append(time_wait)
     reward, time_on_road, time_wait, done = sd_rules_agent_wrapper(test_tasks[0])
+    print(test_tasks[0])
     print('episode_time_on_road: ', time_on_road, 'episode_time_wait:', time_wait, "done:", done)
     episode_time_wait_list.append(time_wait)
     average_wait = sum(episode_time_wait_list)/len(episode_time_wait_list)

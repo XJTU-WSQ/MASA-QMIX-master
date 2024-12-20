@@ -11,7 +11,7 @@ def get_common_args():
     parser.add_argument('--result_dir', type=str, default='./result', help='result directory of the policy')
     parser.add_argument('--load_model', type=bool, default=False, help='whether to load the pretrained model')
     parser.add_argument('--alg', type=str, default='qmix', help='the algorithm to train the agent')
-    parser.add_argument('--last_action', type=bool, default=True, help='whether to use the last action to choose action')
+    parser.add_argument('--last_action', type=bool, default=False, help='whether to use the last action to choose action')
     parser.add_argument('--reuse_network', type=bool, default=False, help='whether to use one network for all agents')
     parser.add_argument('--gamma', type=float, default=0.995, help='discount factor')
     parser.add_argument('--optimizer', type=str, default="RMS", help='optimizer')

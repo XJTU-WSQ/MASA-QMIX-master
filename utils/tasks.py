@@ -33,7 +33,7 @@ class Tasks:
             [0, 0, 1, 0, 1, 0],    # 5 私人物品配送
             [1, 0, 0, 0, 0, 1]     # 6 康复训练
         ]
-        self.task_priority = [1, 2, 3, 3, 3, 4, 4]
+        self.task_priority = [4, 3, 2, 2, 2, 1, 1]
 
     # 函数功能：获取当前时刻的任务请求列表，确定尚未进行分配的任务，获取任务类型，返回各个任务请求点所需的技能列表。
     def get_tasks_required_skill_list(self, task_window):

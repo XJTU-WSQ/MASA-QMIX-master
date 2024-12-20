@@ -1,0 +1,92 @@
+[
+    {
+        "task_index": 32,
+        "request_time": 440,
+        "wait_time": 190,
+        "task_type": 3,
+        "request_pos": 15,
+        "target_pos": 15,
+        "service_time": 300
+    },
+    {
+        "task_index": 33,
+        "request_time": 467,
+        "wait_time": 163,
+        "task_type": 3,
+        "request_pos": 13,
+        "target_pos": 13,
+        "service_time": 300
+    },
+    {
+        "task_index": 40,
+        "request_time": 583,
+        "wait_time": 47,
+        "task_type": 3,
+        "request_pos": 2,
+        "target_pos": 2,
+        "service_time": 300
+    },
+    {
+        "task_index": 42,
+        "request_time": 595,
+        "wait_time": 35,
+        "task_type": 5,
+        "request_pos": 16,
+        "target_pos": 20,
+        "service_time": 20
+    },
+    {
+        "task_index": 44,
+        "request_time": 603,
+        "wait_time": 27,
+        "task_type": 4,
+        "request_pos": 25,
+        "target_pos": 2,
+        "service_time": 20
+    },
+    {
+        "task_index": 45,
+        "request_time": 605,
+        "wait_time": 25,
+        "task_type": 1,
+        "request_pos": 5,
+        "target_pos": 24,
+        "service_time": 20
+    },
+    {
+        "task_index": 46,
+        "request_time": 614,
+        "wait_time": 16,
+        "task_type": 5,
+        "request_pos": 16,
+        "target_pos": 21,
+        "service_time": 20
+    },
+    {
+        "task_index": 49,
+        "request_time": 633,
+        "wait_time": 0,
+        "task_type": 5,
+        "request_pos": 17,
+        "target_pos": 6,
+        "service_time": 20
+    },
+    {
+        "task_index": 50,
+        "request_time": 645,
+        "wait_time": 0,
+        "task_type": 4,
+        "request_pos": 21,
+        "target_pos": 7,
+        "service_time": 20
+    },
+    {
+        "task_index": 51,
+        "request_time": 651,
+        "wait_time": 0,
+        "task_type": 1,
+        "request_pos": 7,
+        "target_pos": 25,
+        "service_time": 20
+    }
+]
