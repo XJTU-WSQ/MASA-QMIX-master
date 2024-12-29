@@ -3,9 +3,8 @@ import torch
 from policy.qmix import QMIX
 
 
-# 这里是否合适？
 def random_choice_with_mask(avail_actions):
-    temp = []    # 所有机器人都有不做分配这个动作
+    temp = []
     for i, eve in enumerate(avail_actions):
         if eve == 1:
             temp.append(i)
@@ -13,12 +12,12 @@ def random_choice_with_mask(avail_actions):
 
 
 class Agents:
-    def __init__(self, args):
+    def __init__(self, args, writer=None):
         self.n_actions = args.n_actions
         self.n_agents = args.n_agents
         self.state_shape = args.state_shape
         self.obs_shape = args.obs_shape
-        self.policy = QMIX(args)
+        self.policy = QMIX(args, writer)
         self.args = args
         print('Init Agents')
 

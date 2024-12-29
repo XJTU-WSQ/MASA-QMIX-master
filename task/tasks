@@ -1,210 +1,262 @@
 Task index  |Time        |Location                 |Task Type                     |Target                   |Duration    
 -------------------------------------------------------------------------------------------------------------------------
-0           |0           |Room4                    |Rehabilitation Training       |Room5                    |300         
-1           |2           |Bathroom                 |Emotional Accompaniment       |Bathroom                 |300         
-2           |45          |Room1                    |Go to Toilet                  |Northwest Toilet         |20          
-3           |45          |Duty Room                |Personal Item Delivery        |Room1                    |20          
-4           |130         |Room8                    |Personal Item Delivery        |Room10                   |20          
-5           |208         |Room5                    |Rehabilitation Training       |Room1                    |300         
-6           |254         |Activity Room            |Emotional Accompaniment       |Activity Room            |300         
-7           |262         |Northwest Toilet         |Personal Item Delivery        |North Activity Area      |20          
-8           |263         |Duty Room                |Go to Toilet                  |Northwest Toilet         |20          
-9           |340         |Room3                    |Go to Toilet                  |Northwest Toilet         |20          
-10          |350         |Room4                    |Rehabilitation Training       |North Activity Area      |300         
-11          |357         |Room18                   |Personal Item Delivery        |Room16                   |20          
-12          |404         |Room2                    |Rehabilitation Training       |Room13                   |300         
-13          |419         |Room3                    |Mobility Assistance Task      |Dining Room              |20          
-14          |434         |Room11                   |Mobility Assistance Task      |South Activity Area      |20          
-15          |440         |Dining Room              |Emotional Accompaniment       |Dining Room              |300         
-16          |452         |Room16                   |Mobility Assistance Task      |Northwest Toilet         |20          
-17          |458         |Room11                   |Rehabilitation Training       |Room1                    |300         
-18          |476         |Room10                   |Mobility Assistance Task      |Room8                    |20          
-19          |477         |Room18                   |Go to Toilet                  |Northwest Toilet         |20          
-20          |487         |Bathroom                 |Emotional Accompaniment       |Bathroom                 |300         
-21          |519         |Room1                    |Rehabilitation Training       |Duty Room                |300         
-22          |533         |Room4                    |Go to Toilet                  |Southeast Toilet         |20          
-23          |534         |Room15                   |Go to Toilet                  |Southeast Toilet         |20          
-24          |535         |Room12                   |Go to Toilet                  |Northwest Toilet         |20          
-25          |542         |Room9                    |Go to Toilet                  |Northwest Toilet         |20          
-26          |561         |Room6                    |Emotional Accompaniment       |Room6                    |300         
-27          |566         |Room8                    |Mobility Assistance Task      |Room12                   |20          
-28          |595         |Dining Room              |Go to Toilet                  |Northwest Toilet         |20          
-29          |597         |Room15                   |Mobility Assistance Task      |Room7                    |20          
-30          |639         |Room12                   |Mobility Assistance Task      |Room2                    |20          
-31          |649         |Room2                    |Mobility Assistance Task      |Room13                   |20          
-32          |652         |Room11                   |Mobility Assistance Task      |Room8                    |20          
-33          |667         |Room11                   |Meal Delivery                 |Dining Room              |30          
-34          |671         |Northwest Toilet         |Mobility Assistance Task      |South Activity Area      |20          
-35          |705         |Room10                   |Go to Toilet                  |Southeast Toilet         |20          
-36          |713         |Activity Room            |Mobility Assistance Task      |Room4                    |20          
-37          |740         |Room7                    |Mobility Assistance Task      |Room12                   |20          
-38          |777         |Room10                   |Go to Toilet                  |Southeast Toilet         |20          
-39          |784         |South Activity Area      |Meal Delivery                 |Dining Room              |30          
-40          |788         |Room13                   |Go to Toilet                  |Southeast Toilet         |20          
-41          |805         |Room13                   |Go to Toilet                  |Southeast Toilet         |20          
-42          |817         |Room9                    |Mobility Assistance Task      |Room16                   |20          
-43          |849         |South Activity Area      |Mobility Assistance Task      |Room12                   |20          
-44          |858         |South Activity Area      |Go to Toilet                  |Southeast Toilet         |20          
-45          |874         |Room14                   |Go to Toilet                  |Southeast Toilet         |20          
-46          |886         |Room7                    |Rehabilitation Training       |Duty Room                |300         
-47          |893         |Room14                   |Go to Toilet                  |Northwest Toilet         |20          
-48          |899         |Room14                   |Go to Toilet                  |Northwest Toilet         |20          
-49          |904         |Room3                    |Go to Toilet                  |Northwest Toilet         |20          
-50          |908         |Northwest Toilet         |Personal Item Delivery        |Room16                   |20          
-51          |931         |Southeast Toilet         |Personal Item Delivery        |Room9                    |20          
-52          |935         |Room17                   |Emotional Accompaniment       |Room17                   |300         
-53          |951         |Room16                   |Go to Toilet                  |Northwest Toilet         |20          
-54          |973         |Southeast Toilet         |Mobility Assistance Task      |Room13                   |20          
-55          |996         |Duty Room                |Go to Toilet                  |Southeast Toilet         |20          
-56          |1003        |Northwest Toilet         |Personal Item Delivery        |South Activity Area      |20          
-57          |1021        |Room14                   |Mobility Assistance Task      |Room6                    |20          
-58          |1028        |Room18                   |Mobility Assistance Task      |Room18                   |20          
-59          |1034        |Duty Room                |Go to Toilet                  |Southeast Toilet         |20          
-60          |1064        |Room15                   |Rehabilitation Training       |North Activity Area      |300         
-61          |1086        |Activity Room            |Mobility Assistance Task      |Room3                    |20          
-62          |1139        |North Activity Area      |Personal Item Delivery        |Dining Room              |20          
-63          |1163        |Room9                    |Go to Toilet                  |Northwest Toilet         |20          
-64          |1171        |Room2                    |Go to Toilet                  |Southeast Toilet         |20          
-65          |1188        |Room7                    |Mobility Assistance Task      |Room5                    |20          
-66          |1248        |Room10                   |Mobility Assistance Task      |Room11                   |20          
-67          |1255        |North Activity Area      |Personal Item Delivery        |Room18                   |20          
-68          |1270        |Duty Room                |Mobility Assistance Task      |Duty Room                |20          
-69          |1324        |Room8                    |Go to Toilet                  |Southeast Toilet         |20          
-70          |1335        |Room6                    |Emotional Accompaniment       |Room6                    |300         
-71          |1351        |Room3                    |Emotional Accompaniment       |Room3                    |300         
-72          |1377        |Room7                    |Rehabilitation Training       |Room3                    |300         
-73          |1381        |Room11                   |Rehabilitation Training       |Room18                   |300         
-74          |1392        |North Activity Area      |Emotional Accompaniment       |North Activity Area      |300         
-75          |1401        |South Activity Area      |Mobility Assistance Task      |Room9                    |20          
-76          |1412        |Room12                   |Meal Delivery                 |Dining Room              |30          
-77          |1432        |Room4                    |Rehabilitation Training       |Activity Room            |300         
-78          |1447        |Room15                   |Go to Toilet                  |Northwest Toilet         |20          
-79          |1466        |Room11                   |Mobility Assistance Task      |Room17                   |20          
-80          |1493        |Room2                    |Mobility Assistance Task      |Room12                   |20          
-81          |1504        |Room7                    |Go to Toilet                  |Southeast Toilet         |20          
-82          |1508        |Room9                    |Mobility Assistance Task      |Room10                   |20          
-83          |1524        |Room9                    |Go to Toilet                  |Southeast Toilet         |20          
-84          |1552        |Room8                    |Personal Item Delivery        |Activity Room            |20          
-85          |1556        |Room16                   |Mobility Assistance Task      |Room6                    |20          
-86          |1566        |Room3                    |Meal Delivery                 |Dining Room              |30          
-87          |1582        |Room16                   |Go to Toilet                  |Northwest Toilet         |20          
-88          |1621        |Bathroom                 |Mobility Assistance Task      |Room9                    |20          
-89          |1655        |Room5                    |Personal Item Delivery        |Room2                    |20          
-90          |1661        |Room15                   |Go to Toilet                  |Southeast Toilet         |20          
-91          |1663        |Room2                    |Emotional Accompaniment       |Room2                    |300         
-92          |1664        |Room18                   |Go to Toilet                  |Northwest Toilet         |20          
-93          |1689        |Activity Room            |Rehabilitation Training       |Room13                   |300         
-94          |1694        |Room6                    |Mobility Assistance Task      |Room6                    |20          
-95          |1712        |Bathroom                 |Mobility Assistance Task      |Room5                    |20          
-96          |1712        |Room16                   |Emotional Accompaniment       |Room16                   |300         
-97          |1722        |Room2                    |Personal Item Delivery        |Duty Room                |20          
-98          |1731        |Room6                    |Meal Delivery                 |Dining Room              |30          
-99          |1762        |Room11                   |Mobility Assistance Task      |North Activity Area      |20          
-100         |1771        |Room1                    |Go to Toilet                  |Northwest Toilet         |20          
-101         |1772        |Room15                   |Personal Item Delivery        |Room5                    |20          
-102         |1795        |Room8                    |Personal Item Delivery        |Room11                   |20          
-103         |1827        |Room13                   |Go to Toilet                  |Northwest Toilet         |20          
-104         |1833        |Room5                    |Mobility Assistance Task      |Activity Room            |20          
-105         |1918        |Room12                   |Mobility Assistance Task      |Room6                    |20          
-106         |1923        |Room9                    |Mobility Assistance Task      |Room3                    |20          
-107         |1950        |Room2                    |Meal Delivery                 |Dining Room              |30          
-108         |1979        |Room17                   |Mobility Assistance Task      |Room6                    |20          
-109         |1984        |Northwest Toilet         |Mobility Assistance Task      |Room3                    |20          
-110         |2017        |North Activity Area      |Mobility Assistance Task      |Room5                    |20          
-111         |2026        |Room3                    |Meal Delivery                 |Dining Room              |30          
-112         |2029        |Room17                   |Go to Toilet                  |Northwest Toilet         |20          
-113         |2029        |Room8                    |Personal Item Delivery        |Room13                   |20          
-114         |2056        |Room14                   |Emotional Accompaniment       |Room14                   |300         
-115         |2074        |Room5                    |Emotional Accompaniment       |Room5                    |300         
-116         |2080        |Room1                    |Rehabilitation Training       |Room15                   |300         
-117         |2132        |Southeast Toilet         |Personal Item Delivery        |Room6                    |20          
-118         |2145        |Northwest Toilet         |Personal Item Delivery        |Room16                   |20          
-119         |2154        |Room14                   |Meal Delivery                 |Dining Room              |30          
-120         |2164        |North Activity Area      |Mobility Assistance Task      |Room10                   |20          
-121         |2171        |Room16                   |Go to Toilet                  |Northwest Toilet         |20          
-122         |2219        |Room7                    |Rehabilitation Training       |Room15                   |300         
-123         |2253        |Room18                   |Go to Toilet                  |Northwest Toilet         |20          
-124         |2307        |Dining Room              |Go to Toilet                  |Northwest Toilet         |20          
-125         |2308        |Room12                   |Mobility Assistance Task      |Room12                   |20          
-126         |2341        |Room10                   |Emotional Accompaniment       |Room10                   |300         
-127         |2346        |Room4                    |Go to Toilet                  |Southeast Toilet         |20          
-128         |2369        |Room13                   |Mobility Assistance Task      |Duty Room                |20          
-129         |2398        |Room13                   |Mobility Assistance Task      |Room5                    |20          
-130         |2399        |Room18                   |Emotional Accompaniment       |Room18                   |300         
-131         |2404        |Room17                   |Mobility Assistance Task      |Room10                   |20          
-132         |2412        |Room13                   |Meal Delivery                 |Dining Room              |30          
-133         |2412        |Activity Room            |Mobility Assistance Task      |Room4                    |20          
-134         |2440        |Room12                   |Mobility Assistance Task      |Dining Room              |20          
-135         |2444        |South Activity Area      |Mobility Assistance Task      |Room17                   |20          
-136         |2455        |Northwest Toilet         |Mobility Assistance Task      |Room11                   |20          
-137         |2461        |Room7                    |Go to Toilet                  |Southeast Toilet         |20          
-138         |2475        |Room8                    |Mobility Assistance Task      |Activity Room            |20          
-139         |2484        |Room1                    |Emotional Accompaniment       |Room1                    |300         
-140         |2503        |Room10                   |Go to Toilet                  |Southeast Toilet         |20          
-141         |2525        |Duty Room                |Meal Delivery                 |Dining Room              |30          
-142         |2527        |Room17                   |Mobility Assistance Task      |Northwest Toilet         |20          
-143         |2537        |Room14                   |Go to Toilet                  |Southeast Toilet         |20          
-144         |2595        |Room4                    |Meal Delivery                 |Dining Room              |30          
-145         |2597        |Activity Room            |Go to Toilet                  |Southeast Toilet         |20          
-146         |2636        |Room13                   |Go to Toilet                  |Northwest Toilet         |20          
-147         |2645        |Bathroom                 |Mobility Assistance Task      |Room11                   |20          
-148         |2654        |North Activity Area      |Emotional Accompaniment       |North Activity Area      |300         
-149         |2663        |Bathroom                 |Go to Toilet                  |Northwest Toilet         |20          
-150         |2664        |Southeast Toilet         |Personal Item Delivery        |Room16                   |20          
-151         |2674        |South Activity Area      |Emotional Accompaniment       |South Activity Area      |300         
-152         |2685        |Room17                   |Rehabilitation Training       |Room5                    |300         
-153         |2702        |North Activity Area      |Mobility Assistance Task      |Room3                    |20          
-154         |2767        |Room1                    |Meal Delivery                 |Dining Room              |30          
-155         |2819        |Room9                    |Go to Toilet                  |Southeast Toilet         |20          
-156         |2823        |Room14                   |Go to Toilet                  |Southeast Toilet         |20          
-157         |2862        |Room9                    |Meal Delivery                 |Dining Room              |30          
-158         |2871        |Room11                   |Go to Toilet                  |Northwest Toilet         |20          
-159         |2871        |Room10                   |Go to Toilet                  |Southeast Toilet         |20          
-160         |2893        |Room13                   |Emotional Accompaniment       |Room13                   |300         
-161         |2908        |Room18                   |Go to Toilet                  |Northwest Toilet         |20          
-162         |2909        |Dining Room              |Rehabilitation Training       |Room8                    |300         
-163         |2925        |Dining Room              |Go to Toilet                  |Northwest Toilet         |20          
-164         |2933        |Bathroom                 |Personal Item Delivery        |Room16                   |20          
-165         |2941        |Room16                   |Go to Toilet                  |Northwest Toilet         |20          
-166         |2959        |Activity Room            |Personal Item Delivery        |Dining Room              |20          
-167         |2975        |Southeast Toilet         |Mobility Assistance Task      |North Activity Area      |20          
-168         |2980        |Bathroom                 |Mobility Assistance Task      |Room9                    |20          
-169         |2985        |Duty Room                |Meal Delivery                 |Dining Room              |30          
-170         |2987        |Dining Room              |Go to Toilet                  |Southeast Toilet         |20          
-171         |2988        |Room17                   |Mobility Assistance Task      |Room6                    |20          
-172         |2996        |Southeast Toilet         |Mobility Assistance Task      |Room1                    |20          
-173         |3006        |Room5                    |Emotional Accompaniment       |Room5                    |300         
-174         |3008        |Room4                    |Mobility Assistance Task      |Room17                   |20          
-175         |3020        |Dining Room              |Go to Toilet                  |Southeast Toilet         |20          
-176         |3047        |Room4                    |Rehabilitation Training       |Room9                    |300         
-177         |3077        |Room5                    |Meal Delivery                 |Dining Room              |30          
-178         |3081        |Room3                    |Mobility Assistance Task      |Room13                   |20          
-179         |3116        |Room12                   |Go to Toilet                  |Southeast Toilet         |20          
-180         |3127        |Activity Room            |Personal Item Delivery        |Room10                   |20          
-181         |3127        |Room15                   |Go to Toilet                  |Northwest Toilet         |20          
-182         |3141        |Room6                    |Emotional Accompaniment       |Room6                    |300         
-183         |3163        |Room8                    |Go to Toilet                  |Southeast Toilet         |20          
-184         |3179        |Room5                    |Personal Item Delivery        |Room14                   |20          
-185         |3202        |Dining Room              |Rehabilitation Training       |Room8                    |300         
-186         |3209        |Southeast Toilet         |Rehabilitation Training       |Room9                    |300         
-187         |3211        |Northwest Toilet         |Rehabilitation Training       |Room12                   |300         
-188         |3222        |Room15                   |Go to Toilet                  |Northwest Toilet         |20          
-189         |3241        |Room17                   |Go to Toilet                  |Southeast Toilet         |20          
-190         |3255        |Room6                    |Go to Toilet                  |Northwest Toilet         |20          
-191         |3256        |Room18                   |Meal Delivery                 |Dining Room              |30          
-192         |3258        |Room5                    |Go to Toilet                  |Southeast Toilet         |20          
-193         |3275        |North Activity Area      |Mobility Assistance Task      |Room14                   |20          
-194         |3277        |Room16                   |Meal Delivery                 |Dining Room              |30          
-195         |3370        |Room1                    |Rehabilitation Training       |Room12                   |300         
-196         |3381        |Room6                    |Mobility Assistance Task      |Room17                   |20          
-197         |3386        |Room3                    |Go to Toilet                  |Southeast Toilet         |20          
-198         |3395        |Room7                    |Meal Delivery                 |Dining Room              |30          
-199         |3419        |Duty Room                |Mobility Assistance Task      |Room9                    |20          
-200         |3420        |Southeast Toilet         |Rehabilitation Training       |Dining Room              |300         
-201         |3428        |Room6                    |Mobility Assistance Task      |Room13                   |20          
-202         |3437        |Room1                    |Go to Toilet                  |Northwest Toilet         |20          
-203         |3475        |Room2                    |Mobility Assistance Task      |Bathroom                 |20          
-204         |3518        |South Activity Area      |Go to Toilet                  |Northwest Toilet         |20          
-205         |3520        |South Activity Area      |Go to Toilet                  |Southeast Toilet         |20          
-206         |3536        |Room12                   |Meal Delivery                 |Dining Room              |30          
-207         |3547        |Room10                   |Personal Item Delivery        |Activity Room            |20          
+0           |0           |Duty Room                |Rehabilitation Training       |North Activity Area      |300         
+1           |15          |Room5                    |Personal Item Delivery        |Room6                    |30          
+2           |19          |South Activity Area      |Emotional Accompaniment       |South Activity Area      |300         
+3           |54          |Room8                    |Mobility Assistance Task      |Room2                    |30          
+4           |55          |South Activity Area      |Mobility Assistance Task      |Room2                    |30          
+5           |61          |Room15                   |Emotional Accompaniment       |Room15                   |300         
+6           |74          |Room2                    |Mobility Assistance Task      |Room6                    |30          
+7           |104         |Room3                    |Mobility Assistance Task      |Room15                   |30          
+8           |107         |Activity Room            |Mobility Assistance Task      |Room6                    |30          
+9           |110         |Activity Room            |Mobility Assistance Task      |Room11                   |30          
+10          |124         |Room14                   |Mobility Assistance Task      |Activity Room            |30          
+11          |137         |Activity Room            |Meal Delivery                 |Dining Room              |30          
+12          |143         |Room4                    |Rehabilitation Training       |Room10                   |300         
+13          |151         |Room16                   |Mobility Assistance Task      |Room4                    |30          
+14          |178         |Duty Room                |Mobility Assistance Task      |Room6                    |30          
+15          |237         |Room5                    |Mobility Assistance Task      |Room7                    |30          
+16          |241         |Room15                   |Mobility Assistance Task      |Room9                    |30          
+17          |245         |Room17                   |Mobility Assistance Task      |Room2                    |30          
+18          |265         |Room12                   |Mobility Assistance Task      |Room6                    |30          
+19          |278         |Room11                   |Mobility Assistance Task      |Room18                   |30          
+20          |281         |Room2                    |Mobility Assistance Task      |Bathroom                 |30          
+21          |291         |Room18                   |Emotional Accompaniment       |Room18                   |300         
+22          |322         |Northwest Toilet         |Mobility Assistance Task      |Room2                    |30          
+23          |333         |North Activity Area      |Mobility Assistance Task      |Room11                   |30          
+24          |338         |Room1                    |Meal Delivery                 |Dining Room              |30          
+25          |343         |Room2                    |Mobility Assistance Task      |Room14                   |30          
+26          |376         |Room11                   |Meal Delivery                 |Dining Room              |30          
+27          |377         |Room2                    |Mobility Assistance Task      |Room4                    |30          
+28          |406         |Room8                    |Mobility Assistance Task      |Southeast Toilet         |30          
+29          |431         |Room6                    |Mobility Assistance Task      |Room12                   |30          
+30          |433         |Room12                   |Meal Delivery                 |Dining Room              |30          
+31          |444         |North Activity Area      |Personal Item Delivery        |Room13                   |30          
+32          |489         |Room16                   |Mobility Assistance Task      |Room11                   |30          
+33          |500         |Room4                    |Emotional Accompaniment       |Room4                    |300         
+34          |522         |Room3                    |Mobility Assistance Task      |Room4                    |30          
+35          |535         |Room10                   |Rehabilitation Training       |Room8                    |300         
+36          |582         |Activity Room            |Mobility Assistance Task      |Southeast Toilet         |30          
+37          |590         |Southeast Toilet         |Rehabilitation Training       |Room18                   |300         
+38          |648         |Room7                    |Personal Item Delivery        |Southeast Toilet         |30          
+39          |662         |Dining Room              |Mobility Assistance Task      |North Activity Area      |30          
+40          |680         |North Activity Area      |Mobility Assistance Task      |Room13                   |30          
+41          |685         |Room16                   |Rehabilitation Training       |Room3                    |300         
+42          |717         |Room12                   |Mobility Assistance Task      |Room11                   |30          
+43          |729         |Room9                    |Mobility Assistance Task      |Room16                   |30          
+44          |733         |Northwest Toilet         |Mobility Assistance Task      |Room11                   |30          
+45          |735         |Room9                    |Personal Item Delivery        |Room14                   |30          
+46          |747         |Room18                   |Mobility Assistance Task      |Duty Room                |30          
+47          |751         |South Activity Area      |Mobility Assistance Task      |North Activity Area      |30          
+48          |760         |Room1                    |Mobility Assistance Task      |Duty Room                |30          
+49          |800         |Room12                   |Mobility Assistance Task      |South Activity Area      |30          
+50          |808         |Room12                   |Mobility Assistance Task      |Activity Room            |30          
+51          |815         |North Activity Area      |Emotional Accompaniment       |North Activity Area      |300         
+52          |850         |Room18                   |Mobility Assistance Task      |Activity Room            |30          
+53          |868         |Room13                   |Mobility Assistance Task      |Room3                    |30          
+54          |888         |Southeast Toilet         |Mobility Assistance Task      |Room8                    |30          
+55          |890         |Room14                   |Mobility Assistance Task      |Room6                    |30          
+56          |896         |Room10                   |Mobility Assistance Task      |Room9                    |30          
+57          |910         |South Activity Area      |Mobility Assistance Task      |Room10                   |30          
+58          |911         |Room10                   |Personal Item Delivery        |Room11                   |30          
+59          |942         |Activity Room            |Mobility Assistance Task      |Duty Room                |30          
+60          |958         |Room15                   |Mobility Assistance Task      |Room8                    |30          
+61          |967         |Room7                    |Mobility Assistance Task      |North Activity Area      |30          
+62          |979         |Room4                    |Mobility Assistance Task      |Room1                    |30          
+63          |984         |Room10                   |Mobility Assistance Task      |Room6                    |30          
+64          |988         |Room16                   |Rehabilitation Training       |Room3                    |300         
+65          |992         |Room17                   |Rehabilitation Training       |Dining Room              |300         
+66          |1020        |Room5                    |Meal Delivery                 |Dining Room              |30          
+67          |1024        |Bathroom                 |Mobility Assistance Task      |Room3                    |30          
+68          |1033        |Room6                    |Mobility Assistance Task      |Room9                    |30          
+69          |1034        |Room13                   |Mobility Assistance Task      |Dining Room              |30          
+70          |1037        |Room5                    |Mobility Assistance Task      |Room6                    |30          
+71          |1059        |Room10                   |Mobility Assistance Task      |Room6                    |30          
+72          |1068        |Room7                    |Emotional Accompaniment       |Room7                    |300         
+73          |1073        |Room11                   |Mobility Assistance Task      |Room2                    |30          
+74          |1079        |Room3                    |Mobility Assistance Task      |South Activity Area      |30          
+75          |1088        |Room11                   |Rehabilitation Training       |Room14                   |300         
+76          |1100        |Room9                    |Rehabilitation Training       |Room12                   |300         
+77          |1129        |Room7                    |Mobility Assistance Task      |Room3                    |30          
+78          |1151        |Room16                   |Mobility Assistance Task      |Activity Room            |30          
+79          |1176        |Room7                    |Mobility Assistance Task      |Duty Room                |30          
+80          |1178        |Room6                    |Mobility Assistance Task      |Room7                    |30          
+81          |1182        |Room9                    |Mobility Assistance Task      |Room6                    |30          
+82          |1189        |Room10                   |Mobility Assistance Task      |Southeast Toilet         |30          
+83          |1224        |Room6                    |Mobility Assistance Task      |Dining Room              |30          
+84          |1225        |Room11                   |Rehabilitation Training       |Room10                   |300         
+85          |1228        |Bathroom                 |Mobility Assistance Task      |Room11                   |30          
+86          |1228        |Activity Room            |Mobility Assistance Task      |Southeast Toilet         |30          
+87          |1258        |Room3                    |Meal Delivery                 |Dining Room              |30          
+88          |1263        |Room18                   |Mobility Assistance Task      |Dining Room              |30          
+89          |1273        |Duty Room                |Mobility Assistance Task      |Room8                    |30          
+90          |1278        |Southeast Toilet         |Mobility Assistance Task      |North Activity Area      |30          
+91          |1286        |Room4                    |Meal Delivery                 |Dining Room              |30          
+92          |1299        |Activity Room            |Mobility Assistance Task      |Bathroom                 |30          
+93          |1301        |Room15                   |Mobility Assistance Task      |Room6                    |30          
+94          |1312        |Room18                   |Emotional Accompaniment       |Room18                   |300         
+95          |1315        |Duty Room                |Mobility Assistance Task      |Room11                   |30          
+96          |1336        |Dining Room              |Mobility Assistance Task      |Room16                   |30          
+97          |1351        |Room14                   |Meal Delivery                 |Dining Room              |30          
+98          |1353        |Southeast Toilet         |Mobility Assistance Task      |Room15                   |30          
+99          |1365        |Room4                    |Mobility Assistance Task      |Room11                   |30          
+100         |1370        |South Activity Area      |Meal Delivery                 |Dining Room              |30          
+101         |1373        |Bathroom                 |Mobility Assistance Task      |Southeast Toilet         |30          
+102         |1400        |Room14                   |Personal Item Delivery        |Room8                    |30          
+103         |1408        |Bathroom                 |Mobility Assistance Task      |Room5                    |30          
+104         |1450        |Room10                   |Mobility Assistance Task      |Room11                   |30          
+105         |1453        |Room1                    |Personal Item Delivery        |Activity Room            |30          
+106         |1466        |Room18                   |Personal Item Delivery        |Duty Room                |30          
+107         |1488        |Northwest Toilet         |Mobility Assistance Task      |Room6                    |30          
+108         |1535        |Room12                   |Emotional Accompaniment       |Room12                   |300         
+109         |1538        |Room5                    |Meal Delivery                 |Dining Room              |30          
+110         |1539        |Room4                    |Mobility Assistance Task      |Southeast Toilet         |30          
+111         |1542        |Northwest Toilet         |Mobility Assistance Task      |Room5                    |30          
+112         |1587        |Northwest Toilet         |Mobility Assistance Task      |South Activity Area      |30          
+113         |1591        |Room4                    |Meal Delivery                 |Dining Room              |30          
+114         |1598        |Room15                   |Meal Delivery                 |Dining Room              |30          
+115         |1617        |Duty Room                |Personal Item Delivery        |Room1                    |30          
+116         |1633        |Room3                    |Mobility Assistance Task      |Dining Room              |30          
+117         |1676        |Dining Room              |Mobility Assistance Task      |Room18                   |30          
+118         |1691        |Room1                    |Meal Delivery                 |Dining Room              |30          
+119         |1728        |Room14                   |Mobility Assistance Task      |Room6                    |30          
+120         |1741        |Room8                    |Mobility Assistance Task      |Room12                   |30          
+121         |1762        |Room3                    |Mobility Assistance Task      |Room10                   |30          
+122         |1766        |Room8                    |Mobility Assistance Task      |Room9                    |30          
+123         |1778        |Room8                    |Mobility Assistance Task      |Room9                    |30          
+124         |1784        |Room3                    |Rehabilitation Training       |Room17                   |300         
+125         |1828        |Room17                   |Mobility Assistance Task      |Room15                   |30          
+126         |1842        |Room12                   |Mobility Assistance Task      |Room8                    |30          
+127         |1847        |Duty Room                |Rehabilitation Training       |Northwest Toilet         |300         
+128         |1857        |Room3                    |Mobility Assistance Task      |Dining Room              |30          
+129         |1866        |Room6                    |Mobility Assistance Task      |Room14                   |30          
+130         |1868        |Room1                    |Personal Item Delivery        |Room9                    |30          
+131         |1896        |Activity Room            |Mobility Assistance Task      |Room10                   |30          
+132         |1900        |Room9                    |Rehabilitation Training       |Dining Room              |300         
+133         |1921        |Room16                   |Mobility Assistance Task      |Bathroom                 |30          
+134         |1925        |Room9                    |Personal Item Delivery        |Dining Room              |30          
+135         |1937        |Room14                   |Mobility Assistance Task      |Room6                    |30          
+136         |1949        |Room2                    |Mobility Assistance Task      |Room17                   |30          
+137         |1960        |Room14                   |Mobility Assistance Task      |Northwest Toilet         |30          
+138         |2008        |Room9                    |Personal Item Delivery        |Room2                    |30          
+139         |2014        |Room13                   |Mobility Assistance Task      |North Activity Area      |30          
+140         |2019        |Bathroom                 |Mobility Assistance Task      |Room14                   |30          
+141         |2031        |Room7                    |Mobility Assistance Task      |Room17                   |30          
+142         |2061        |Room16                   |Mobility Assistance Task      |Room3                    |30          
+143         |2064        |Room5                    |Mobility Assistance Task      |Room13                   |30          
+144         |2066        |Southeast Toilet         |Mobility Assistance Task      |Room15                   |30          
+145         |2090        |Room17                   |Emotional Accompaniment       |Room17                   |300         
+146         |2093        |Room11                   |Mobility Assistance Task      |Room16                   |30          
+147         |2162        |South Activity Area      |Mobility Assistance Task      |Room9                    |30          
+148         |2168        |Room13                   |Emotional Accompaniment       |Room13                   |300         
+149         |2173        |Duty Room                |Mobility Assistance Task      |Room17                   |30          
+150         |2174        |Room7                    |Mobility Assistance Task      |Room1                    |30          
+151         |2192        |Room18                   |Mobility Assistance Task      |Northwest Toilet         |30          
+152         |2203        |Room14                   |Mobility Assistance Task      |Dining Room              |30          
+153         |2211        |Room3                    |Mobility Assistance Task      |Room12                   |30          
+154         |2231        |South Activity Area      |Emotional Accompaniment       |South Activity Area      |300         
+155         |2237        |Northwest Toilet         |Mobility Assistance Task      |South Activity Area      |30          
+156         |2258        |Room13                   |Mobility Assistance Task      |North Activity Area      |30          
+157         |2287        |Room1                    |Emotional Accompaniment       |Room1                    |300         
+158         |2306        |Dining Room              |Mobility Assistance Task      |Room3                    |30          
+159         |2309        |Room9                    |Meal Delivery                 |Dining Room              |30          
+160         |2318        |Southeast Toilet         |Mobility Assistance Task      |Room6                    |30          
+161         |2351        |Room10                   |Mobility Assistance Task      |Room1                    |30          
+162         |2362        |Room12                   |Mobility Assistance Task      |Room4                    |30          
+163         |2375        |Northwest Toilet         |Mobility Assistance Task      |Room12                   |30          
+164         |2392        |North Activity Area      |Mobility Assistance Task      |Room6                    |30          
+165         |2417        |Room2                    |Mobility Assistance Task      |Room12                   |30          
+166         |2421        |North Activity Area      |Rehabilitation Training       |Southeast Toilet         |300         
+167         |2422        |Room6                    |Mobility Assistance Task      |Northwest Toilet         |30          
+168         |2424        |Room6                    |Mobility Assistance Task      |Room4                    |30          
+169         |2436        |Room5                    |Mobility Assistance Task      |Room6                    |30          
+170         |2439        |Room8                    |Mobility Assistance Task      |Room2                    |30          
+171         |2446        |Bathroom                 |Emotional Accompaniment       |Bathroom                 |300         
+172         |2464        |Room11                   |Emotional Accompaniment       |Room11                   |300         
+173         |2468        |Room10                   |Mobility Assistance Task      |Room2                    |30          
+174         |2503        |Room18                   |Mobility Assistance Task      |Room5                    |30          
+175         |2519        |Room1                    |Mobility Assistance Task      |Southeast Toilet         |30          
+176         |2520        |Room17                   |Meal Delivery                 |Dining Room              |30          
+177         |2537        |Room5                    |Meal Delivery                 |Dining Room              |30          
+178         |2540        |Room6                    |Mobility Assistance Task      |Room15                   |30          
+179         |2587        |Room14                   |Emotional Accompaniment       |Room14                   |300         
+180         |2588        |Room13                   |Mobility Assistance Task      |Room9                    |30          
+181         |2602        |Room5                    |Emotional Accompaniment       |Room5                    |300         
+182         |2607        |Room2                    |Mobility Assistance Task      |Bathroom                 |30          
+183         |2615        |Room8                    |Mobility Assistance Task      |Dining Room              |30          
+184         |2620        |Dining Room              |Mobility Assistance Task      |Room12                   |30          
+185         |2646        |Duty Room                |Mobility Assistance Task      |Dining Room              |30          
+186         |2657        |Room8                    |Mobility Assistance Task      |Room1                    |30          
+187         |2670        |Room17                   |Mobility Assistance Task      |North Activity Area      |30          
+188         |2672        |Room17                   |Mobility Assistance Task      |North Activity Area      |30          
+189         |2685        |Duty Room                |Mobility Assistance Task      |Room14                   |30          
+190         |2707        |Room12                   |Personal Item Delivery        |North Activity Area      |30          
+191         |2717        |Room11                   |Mobility Assistance Task      |Activity Room            |30          
+192         |2726        |Room7                    |Mobility Assistance Task      |Room11                   |30          
+193         |2737        |Room15                   |Mobility Assistance Task      |Room18                   |30          
+194         |2753        |Room11                   |Personal Item Delivery        |Room6                    |30          
+195         |2760        |North Activity Area      |Mobility Assistance Task      |Bathroom                 |30          
+196         |2775        |Room15                   |Mobility Assistance Task      |Dining Room              |30          
+197         |2776        |Room5                    |Personal Item Delivery        |Duty Room                |30          
+198         |2778        |Room15                   |Mobility Assistance Task      |Room16                   |30          
+199         |2790        |Room17                   |Mobility Assistance Task      |Room8                    |30          
+200         |2814        |Room1                    |Mobility Assistance Task      |Southeast Toilet         |30          
+201         |2826        |North Activity Area      |Mobility Assistance Task      |Southeast Toilet         |30          
+202         |2840        |Northwest Toilet         |Mobility Assistance Task      |Duty Room                |30          
+203         |2860        |Room14                   |Mobility Assistance Task      |Duty Room                |30          
+204         |2877        |Room18                   |Mobility Assistance Task      |Room14                   |30          
+205         |2880        |Room17                   |Personal Item Delivery        |Activity Room            |30          
+206         |2885        |Room16                   |Rehabilitation Training       |Room5                    |300         
+207         |2898        |Room7                    |Mobility Assistance Task      |Activity Room            |30          
+208         |2910        |Dining Room              |Mobility Assistance Task      |Room1                    |30          
+209         |2931        |Room15                   |Mobility Assistance Task      |Room13                   |30          
+210         |2953        |Bathroom                 |Personal Item Delivery        |Northwest Toilet         |30          
+211         |2963        |Southeast Toilet         |Mobility Assistance Task      |Room10                   |30          
+212         |2972        |South Activity Area      |Mobility Assistance Task      |Duty Room                |30          
+213         |2988        |Room6                    |Mobility Assistance Task      |Room12                   |30          
+214         |3001        |Room2                    |Mobility Assistance Task      |Room4                    |30          
+215         |3036        |Room17                   |Mobility Assistance Task      |Room12                   |30          
+216         |3046        |Room2                    |Mobility Assistance Task      |Northwest Toilet         |30          
+217         |3050        |North Activity Area      |Mobility Assistance Task      |Activity Room            |30          
+218         |3072        |Activity Room            |Mobility Assistance Task      |Room5                    |30          
+219         |3085        |Room12                   |Mobility Assistance Task      |Bathroom                 |30          
+220         |3089        |Room1                    |Mobility Assistance Task      |Room18                   |30          
+221         |3180        |Northwest Toilet         |Mobility Assistance Task      |Duty Room                |30          
+222         |3181        |Room4                    |Mobility Assistance Task      |Room7                    |30          
+223         |3191        |Southeast Toilet         |Mobility Assistance Task      |Room15                   |30          
+224         |3195        |Dining Room              |Rehabilitation Training       |Room17                   |300         
+225         |3208        |Room1                    |Mobility Assistance Task      |Room6                    |30          
+226         |3226        |Room16                   |Emotional Accompaniment       |Room16                   |300         
+227         |3233        |Dining Room              |Rehabilitation Training       |Room12                   |300         
+228         |3250        |Room16                   |Meal Delivery                 |Dining Room              |30          
+229         |3279        |Room15                   |Emotional Accompaniment       |Room15                   |300         
+230         |3291        |Southeast Toilet         |Mobility Assistance Task      |Room16                   |30          
+231         |3302        |Room3                    |Mobility Assistance Task      |Room14                   |30          
+232         |3302        |Room13                   |Mobility Assistance Task      |Activity Room            |30          
+233         |3351        |Bathroom                 |Mobility Assistance Task      |Room9                    |30          
+234         |3362        |Northwest Toilet         |Mobility Assistance Task      |Room4                    |30          
+235         |3364        |Dining Room              |Mobility Assistance Task      |Room1                    |30          
+236         |3367        |Southeast Toilet         |Rehabilitation Training       |Room18                   |300         
+237         |3372        |Bathroom                 |Rehabilitation Training       |Dining Room              |300         
+238         |3373        |Room9                    |Personal Item Delivery        |Room16                   |30          
+239         |3386        |Room13                   |Emotional Accompaniment       |Room13                   |300         
+240         |3391        |Room13                   |Mobility Assistance Task      |Bathroom                 |30          
+241         |3397        |Dining Room              |Mobility Assistance Task      |Room4                    |30          
+242         |3409        |Room4                    |Mobility Assistance Task      |Room11                   |30          
+243         |3422        |Room7                    |Mobility Assistance Task      |Southeast Toilet         |30          
+244         |3430        |South Activity Area      |Mobility Assistance Task      |Room5                    |30          
+245         |3438        |Room8                    |Meal Delivery                 |Dining Room              |30          
+246         |3446        |North Activity Area      |Mobility Assistance Task      |Northwest Toilet         |30          
+247         |3446        |Room11                   |Personal Item Delivery        |Room15                   |30          
+248         |3446        |Room9                    |Mobility Assistance Task      |Room2                    |30          
+249         |3456        |Duty Room                |Mobility Assistance Task      |Activity Room            |30          
+250         |3462        |Activity Room            |Mobility Assistance Task      |Room2                    |30          
+251         |3475        |Bathroom                 |Personal Item Delivery        |Room18                   |30          
+252         |3482        |South Activity Area      |Mobility Assistance Task      |Activity Room            |30          
+253         |3487        |Room18                   |Mobility Assistance Task      |Room15                   |30          
+254         |3496        |Room4                    |Rehabilitation Training       |Room3                    |300         
+255         |3512        |Room6                    |Mobility Assistance Task      |Duty Room                |30          
+256         |3538        |Room10                   |Mobility Assistance Task      |Room13                   |30          
+257         |3541        |Room8                    |Mobility Assistance Task      |North Activity Area      |30          
+258         |3549        |Room13                   |Mobility Assistance Task      |Room8                    |30          
+259         |3595        |Room2                    |Mobility Assistance Task      |Room4                    |30          

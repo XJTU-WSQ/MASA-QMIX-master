@@ -5,13 +5,14 @@ from network.qmix_net import QMixNet
 
 
 class QMIX:
-    def __init__(self, args):
+    def __init__(self, args, writer=None):
+        self.writer = writer  # 添加 writer
+        self.train_step = 0  # 用于记录训练步数
         self.n_actions = args.n_actions
         self.n_agents = args.n_agents
         self.state_shape = args.state_shape
         self.obs_shape = args.obs_shape
         input_shape = self.obs_shape
-
         # 根据参数决定RNN的输入维度
         if args.last_action:
             input_shape += self.n_actions
@@ -106,9 +107,14 @@ class QMIX:
 
         # 不能直接用mean，因为还有许多经验是没用的，所以要求和再比真实的经验数，才是真正的均值
         loss = (masked_td_error ** 2).sum() / mask.sum()
+        # 写入 TensorBoard
+        # 记录到 TensorBoard
+        if self.writer is not None:
+            self.writer.add_scalar("Train/Loss", loss.item(), self.train_step)
 
-        with open("data/loss.txt", "a") as f:
-            print(loss, file=f)
+        self.train_step += 1
+        # with open("data/loss.txt", "a") as f:
+        #     print(loss, file=f)
         self.optimizer.zero_grad()
         loss.backward()
         torch.nn.utils.clip_grad_norm_(self.eval_parameters, self.args.grad_norm_clip)

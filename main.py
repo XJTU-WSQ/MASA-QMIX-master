@@ -2,12 +2,18 @@ from environment import ScheduleEnv
 from runner import Runner
 from common.arguments import get_common_args, get_mixer_args
 import sys
+import numpy as np
+import torch
 from os.path import dirname, abspath
 sys.path.append(dirname(dirname(abspath(__file__))))
+import os
+
+
+np.random.seed(42)
+torch.manual_seed(42)
 
 
 def marl_agent_wrapper():
-
     args = get_common_args()
     args = get_mixer_args(args)
     env = ScheduleEnv()
@@ -20,8 +26,16 @@ def marl_agent_wrapper():
     print("是否加载模型（测试必须）：", args.load_model, "是否训练：", args.learn)
     runner = Runner(env, args)
 
+    if args.log_step_data:
+        os.makedirs("episode_logs", exist_ok=True)  # 创建保存路径
+    if args.use_tensorboard:
+        print(f"TensorBoard logs at: runs/{args.run_name}")
+
     if args.learn:
         runner.run()
+    else:
+        _, reward = runner.evaluate()
+        print('The ave_reward of {} is  {}'.format(args.alg, reward))
 
 
 if __name__ == "__main__":
